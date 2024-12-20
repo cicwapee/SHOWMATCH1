@@ -35,12 +35,9 @@
             text-align: center;
             margin-top: 20px;
             color: white;
+            text-shadow: 0 0 10px #00acee, 0 0 20px #00acee;
         }
-        .tournament-bracket {
-            margin: 20px auto;
-            max-width: 800px;
-        }
-        .registration-form, .participant-list {
+        .registration-form {
             margin: 20px auto;
             max-width: 400px;
             background-color: rgba(27, 38, 59, 0.85);
@@ -60,14 +57,6 @@
             background-color: #506d8b;
             border-color: #506d8b;
         }
-        .list-group-item {
-            background-color: #1b263b;
-            color: white;
-            border: 1px solid #415a77;
-        }
-        .list-group-item.text-center {
-            color: white;
-        }
         .bg-light {
             background-color: #1b263b !important;
             color: white;
@@ -84,6 +73,7 @@
             padding: 10px 20px;
             border-radius: 5px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 0 10px #00acee, 0 0 20px #00acee;
         }
         .discord-link a {
             color: #00acee;
@@ -92,6 +82,77 @@
         }
         .discord-link a:hover {
             text-decoration: underline;
+        }
+        .rules-slide {
+            margin: 20px;
+            padding: 20px;
+            background-color: #1b263b;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            margin: 30px auto;
+            display: none;
+            text-shadow: 0 0 10px #00acee, 0 0 20px #00acee;
+        }
+        .rules-list {
+            padding-left: 20px;
+        }
+        .contact-links a {
+            color: #00acee;
+            text-decoration: none;
+            display: block;
+            margin: 10px 0;
+        }
+        .contact-links a:hover {
+            text-decoration: underline;
+        }
+        .contact-links {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .btn-glow {
+            background: linear-gradient(45deg, #00acee, #ffffff);
+            border: none;
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 0 5px #00acee, 0 0 10px #00acee;
+            box-shadow: 0 0 15px #00acee;
+            transition: all 0.3s ease-in-out;
+        }
+        .btn-glow:hover {
+            background: linear-gradient(45deg, #ffffff, #00acee);
+            box-shadow: 0 0 20px #00acee, 0 0 25px #00acee;
+        }
+        .btn-secondary {
+            background-color: #506d8b;
+            border-color: #506d8b;
+        }
+        #view-rules-btn {
+            background: linear-gradient(45deg, #8e2de2, #4a00e0);
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            text-align: center;
+            text-shadow: 0 0 10px #8e2de2, 0 0 20px #8e2de2;
+            box-shadow: 0 0 15px #8e2de2, 0 0 30px #4a00e0;
+            transition: all 0.3s ease-in-out;
+            border-radius: 8px;
+        }
+
+        #view-rules-btn:hover {
+            background: linear-gradient(45deg, #4a00e0, #8e2de2);
+            box-shadow: 0 0 25px #8e2de2, 0 0 40px #4a00e0;
+            text-shadow: 0 0 15px #8e2de2, 0 0 30px #8e2de2;
+        }
+        .feedback-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #415a77;
+            border-radius: 5px;
+            background-color: rgba(27, 38, 59, 0.9);
+            color: white;
+            font-size: 1rem;
         }
     </style>
 </head>
@@ -104,7 +165,7 @@
         </header>
 
         <!-- Registration Form -->
-        <section class="registration-form card">
+        <section class="registration-form card" id="registration-form-section">
             <div class="card-body">
                 <h2 class="card-title text-center">Player Registration</h2>
                 <form id="registration-form">
@@ -120,33 +181,47 @@
                             <option value="dota">Dota 2</option>
                         </select>
                     </div>
-                    <button type="submit" id="register-btn" class="btn btn-primary w-100">Register</button>
+                    <button type="submit" id="register-btn" class="btn btn-glow w-100">Register</button>
                     <p id="already-registered-message" class="text-center mt-3 text-warning" style="display: none;">You are already registered!</p>
                 </form>
             </div>
         </section>
 
-        <!-- Participant List -->
-        <section class="participant-list card">
-            <div class="card-body">
-                <h2 class="card-title text-center">Registered Participants</h2>
-                <ul id="participant-list" class="list-group">
-                    <!-- Participants will be dynamically added here -->
-                </ul>
-                <!-- Button to clear the participant list -->
-                <div class="text-center mt-3">
-                    <button id="clear-participant-list-btn" class="btn btn-danger">Clear List</button>
-                </div>
-            </div>
-        </section>
+        <!-- Rules Slide -->
+        <div id="rules-slide" class="rules-slide">
+            <h2 class="text-center">Tournament Rules</h2>
+            <ol class="rules-list">
+                <li>Specify your Discord nickname during registration.</li>
+                <li>Discussion/promotion of political, religious, or nationalistic principles on game servers is forbidden. Nazism, fascism in any of its manifestations is prohibited.</li>
+                <li>Advertising on Discord servers is strictly forbidden.</li>
+                <li>It is forbidden to spoil the game of your team in any way. Violators will be expelled and banned from future participation.</li>
+                <li>Respect the administration. :)</li>
+            </ol>
 
-        <!-- Tournament Bracket -->
-        <section class="tournament-bracket">
-            <h2 class="text-center">Tournament Bracket</h2>
-            <div id="bracket" class="bg-light p-4 rounded">
-                <p class="text-center">Bracket will be displayed here once registration closes.</p>
+            <h3 class="text-center">Contact the Administration</h3>
+            <div class="contact-links text-center">
+                <a href="https://t.me/hsunel" target="_blank">Telegram: @hsunel</a>
+                <a href="https://t.me/cicwape" target="_blank">Telegram: @cicwape</a>
+                <a href="mailto:showsupp@gmail.com">Email: showsupp@gmail.com</a>
             </div>
-        </section>
+
+            <h3 class="text-center">Support the Tournament</h3>
+            <div class="text-center">
+                <a href="https://send.monobank.ua/jar/7cTqAENRXh" target="_blank" class="btn btn-success">Donate via Monobank</a>
+            </div>
+
+            <!-- Feedback Form -->
+            <h3 class="text-center">Leave Your Feedback</h3>
+            <form action="mailto:showsupp@gmail.com?subject=Tournament Feedback" method="POST" enctype="text/plain" class="feedback-form">
+                <textarea name="feedback" rows="4" placeholder="Your feedback..."></textarea><br><br>
+                <button type="submit" class="btn btn-glow">Send Feedback</button>
+            </form>
+        </div>
+
+        <!-- Button to toggle rules view -->
+        <div class="text-center">
+            <button class="btn btn-secondary" id="view-rules-btn">View Rules</button>
+        </div>
     </div>
 
     <!-- Discord Server Link -->
@@ -173,95 +248,20 @@
 
         setInterval(createSnowflake, 200);
 
-        // Load participants from localStorage on page load
-        window.onload = function() {
-            const participants = JSON.parse(localStorage.getItem('participants')) || [];
-            const participantList = document.getElementById('participant-list');
-            participantList.innerHTML = '';
-
-            if (participants.length === 0) {
-                participantList.innerHTML = '<li class="list-group-item text-center">No participants yet.</li>';
-            } else {
-                participants.forEach(participant => {
-                    const participantItem = document.createElement('li');
-                    participantItem.classList.add('list-group-item', 'text-center');
-                    participantItem.textContent = `${participant.nickname} - ${participant.game === 'cs2' ? 'Counter-Strike 2' : 'Dota 2'}`;
-                    participantList.appendChild(participantItem);
-                });
-            }
-        };
-
-        // Function to send data to Discord via webhook
-        const sendToDiscord = (nickname, game) => {
-            const webhookUrl = 'https://discord.com/api/webhooks/1319058292814643261/MTvTRjp0dXVIkphp3KA7phz3pAFSSfvslUKSttGaOP4baZFklCJwgyeGT1OKq29TD_Zz'; // Replace with your Discord Webhook URL
-            const message = {
-                content: `New participant registered: **${nickname}** for **${game === 'cs2' ? 'Counter-Strike 2' : 'Dota 2'}**.`
-            };
-
-            fetch(webhookUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(message),
-            }).catch(error => console.error('Error sending message to Discord:', error));
-        };
-
-        // Handle form submission
-        document.getElementById('registration-form').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent form from submitting and page from refreshing
-
-            const nickname = document.getElementById('nickname').value;
-            const game = document.getElementById('game').value;
-
-            // Check if the user has already registered
-            const participants = JSON.parse(localStorage.getItem('participants')) || [];
-            if (participants.some(participant => participant.nickname === nickname)) {
-                document.getElementById('already-registered-message').style.display = 'block';
-                return; // Stop further processing
-            }
-
-            // Add new participant to the array
-            participants.push({ nickname, game });
-
-            // Save updated participants array to localStorage
-            localStorage.setItem('participants', JSON.stringify(participants));
-
-            // Create a new list item for the participant
-            const participantItem = document.createElement('li');
-            participantItem.classList.add('list-group-item', 'text-center');
-            participantItem.textContent = `${nickname} - ${game === 'cs2' ? 'Counter-Strike 2' : 'Dota 2'}`;
-
-            // Append the new participant to the list
-            const participantList = document.getElementById('participant-list');
-            if (participantList.firstChild && participantList.firstChild.textContent === 'No participants yet.') {
-                participantList.firstChild.remove();
-            }
-            participantList.appendChild(participantItem);
-
-            // Send data to Discord
-            sendToDiscord(nickname, game);
-
-            // Show Discord server link
-            document.querySelector('.discord-link').style.display = 'block';
-
-            // Disable the form fields and button to prevent re-registration
-            document.getElementById('nickname').disabled = true;
-            document.getElementById('game').disabled = true;
-            document.getElementById('register-btn').disabled = true;
-        });
-
-        // Clear participant list
-        document.getElementById('clear-participant-list-btn').addEventListener('click', function() {
-            // Clear participants from localStorage
-            localStorage.removeItem('participants');
+        // Show/hide the rules and registration sections
+        document.getElementById('view-rules-btn').addEventListener('click', function() {
+            const rulesSlide = document.getElementById('rules-slide');
+            const registrationFormSection = document.getElementById('registration-form-section');
             
-            // Clear participant list from the page
-            const participantList = document.getElementById('participant-list');
-            participantList.innerHTML = '<li class="list-group-item text-center">No participants yet.</li>';
-
-            // Display confirmation alert
-            alert("Participant list has been cleared!");
+            if (rulesSlide.style.display === 'block') {
+                rulesSlide.style.display = 'none';
+                registrationFormSection.style.display = 'block';
+                this.textContent = 'View Rules';
+            } else {
+                rulesSlide.style.display = 'block';
+                registrationFormSection.style.display = 'none';
+                this.textContent = 'Close Rules';
+            }
         });
     </script>
 </body>
