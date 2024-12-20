@@ -10,7 +10,7 @@
             background: radial-gradient(circle at top, #0d1b2a, #1b263b, #415a77);
             color: white;
             font-family: Arial, sans-serif;
-            overflow: hidden;
+            overflow-y: scroll; /* Allow the whole page to be scrollable */
         }
         .snowflake {
             position: fixed;
@@ -83,7 +83,7 @@
         .discord-link a:hover {
             text-decoration: underline;
         }
-        .rules-slide {
+        .rules-container {
             margin: 20px;
             padding: 20px;
             background-color: #1b263b;
@@ -91,8 +91,8 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
             max-width: 800px;
             margin: 30px auto;
-            display: none;
             text-shadow: 0 0 10px #00acee, 0 0 20px #00acee;
+            display: none; /* Initially hidden */
         }
         .rules-list {
             padding-left: 20px;
@@ -187,8 +187,13 @@
             </div>
         </section>
 
-        <!-- Rules Slide -->
-        <div id="rules-slide" class="rules-slide">
+        <!-- Button to toggle rules visibility -->
+        <div class="text-center">
+            <button class="btn btn-secondary" id="view-rules-btn">View Rules</button>
+        </div>
+
+        <!-- Rules Container -->
+        <div class="rules-container">
             <h2 class="text-center">Tournament Rules</h2>
             <ol class="rules-list">
                 <li>Specify your Discord nickname during registration.</li>
@@ -218,15 +223,10 @@
             </form>
         </div>
 
-        <!-- Button to toggle rules view -->
-        <div class="text-center">
-            <button class="btn btn-secondary" id="view-rules-btn">View Rules</button>
+        <!-- Discord Server Link -->
+        <div class="discord-link">
+            <a href="https://discord.gg/3K4PfBMyB6" target="_blank">Join Discord</a>
         </div>
-    </div>
-
-    <!-- Discord Server Link -->
-    <div class="discord-link">
-        <a href="https://discord.gg/3K4PfBMyB6" target="_blank">Join Discord</a>
     </div>
 
     <!-- Snowflake Animation -->
@@ -248,19 +248,19 @@
 
         setInterval(createSnowflake, 200);
 
-        // Show/hide the rules and registration sections
+        // Toggle visibility of rules
         document.getElementById('view-rules-btn').addEventListener('click', function() {
-            const rulesSlide = document.getElementById('rules-slide');
-            const registrationFormSection = document.getElementById('registration-form-section');
+            const rulesContainer = document.querySelector('.rules-container');
+            const registrationForm = document.getElementById('registration-form-section');
             
-            if (rulesSlide.style.display === 'block') {
-                rulesSlide.style.display = 'none';
-                registrationFormSection.style.display = 'block';
+            if (rulesContainer.style.display === 'block') {
+                rulesContainer.style.display = 'none';
                 this.textContent = 'View Rules';
+                registrationForm.style.display = 'block'; // Show the registration form again
             } else {
-                rulesSlide.style.display = 'block';
-                registrationFormSection.style.display = 'none';
+                rulesContainer.style.display = 'block';
                 this.textContent = 'Close Rules';
+                registrationForm.style.display = 'none'; // Hide the registration form
             }
         });
     </script>
