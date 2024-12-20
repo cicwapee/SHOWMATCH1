@@ -154,7 +154,35 @@
             color: white;
             font-size: 1rem;
         }
+        .Telegram-link {
+            position: fixed;
+            top: 69px;
+            left: 20px;
+            z-index: 100;
+            background-color: #1b263b;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 0 10px #00acee, 0 0 20px #00acee;
+        }
+        .Telegram-link a {
+            color: #00acee;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+        .Telegram-link a:hover {
+            text-decoration: underline;
+        }
     </style>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-H21CT6LZTZі');
+    </script>
+    
 </head>
 <body>
     <div class="container">
@@ -228,7 +256,10 @@
             <a href="https://discord.gg/3K4PfBMyB6" target="_blank">Join Discord</a>
         </div>
     </div>
-
+     <!-- Telegram Server Link -->
+     <div class="Telegram-link">
+        <a href="https://t.me/dota2bladi" target="_blank">Join Telegram</a>
+     </div>
     <!-- Snowflake Animation -->
     <script>
         const createSnowflake = () => {
