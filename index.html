@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Предмет для покупки</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            overflow: hidden;
+            margin: 0;
+            height: 100vh;
+        }
+        .container {
+            margin-top: 50px;
+            position: relative;
+            z-index: 2;
+            position: absolute; width: 100%; height: 88%;
+            background-size: cover;
+        }
+        img {
+            width: 800px;
+        }
+        .back-button {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(163, 0, 0, 0.2);
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            z-index: 3;
+        }
+        .back-button:hover {
+            background-color: rgba(241, 0, 0, 0.4);
+        }
+        
+        /* Эффект молнии */
+        .lightning {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgb(255, 255, 255);
+            opacity: 0;
+            transition: opacity 0.1s;
+            z-index: 2;
+        }
+        
+        /* Туман */
+        .fog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: url('https://s0.rbk.ru/v6_top_pics/media/img/6/54/755689858401546.jpg') repeat-x;
+            opacity: 0.4;
+            animation: fogMove 5s linear infinite;
+            z-index: 3;
+            background-size: cover;
+        }
+        
+        @keyframes fogMove {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="lightning" id="lightning"></div>
+    <div class="fog"></div>
+    <div class="container">
+        <img src="https://avatars.mds.yandex.net/get-vthumb/1576305/cba91ca6201a53be7656f7d9790427e5/800x450" alt="Предмет">
+        <audio id="thunder-sound" preload="auto">
+            <source src="https://www.dropbox.com/scl/fi/q32qid16w1k38ezabe2fu/jutkii-smeh-mujskoi-v-prostranstve-shumnyii.mp3?rlkey=06qub3kof9vg28wb4eovpsoif&st=u6lz3qye&raw=1" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <script>
+        function triggerLightning() {
+            const lightning = document.getElementById('lightning');
+            const thunder = document.getElementById('thunder-sound');
+            
+            
+            lightning.style.opacity = 1;
+            setTimeout(() => lightning.style.opacity = 0, 100);
+            
+            if (thunder.paused || thunder.ended) {
+                thunder.currentTime = 0;
+                thunder.play().catch(() => {});
+                thunder.volume = 0.8;
+            }
+            
+            setTimeout(triggerLightning, Math.random() * 10 + 80);
+        }
+        
+        window.onload = function() {
+            triggerLightning();
+        };
+    </script>
+</body>
+</html>
